@@ -31,7 +31,7 @@ class App extends Component {
     ]
   }
   componentDidMount() {
-    this.socket = io('http://localhost:3100');
+    this.socket = io('/');
     this.socket.on('updateList', users => {
       this.setState({users});
     });
