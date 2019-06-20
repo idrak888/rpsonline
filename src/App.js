@@ -130,7 +130,7 @@ class App extends Component {
           <Msg msg={this.state.msg} />
           <div className="overlay"></div>
           <Join newUser={this.newUser} updateRoomInfo={this.updateRoomInfo} />
-          <Header leaveRoom={this.leaveRoom} roomName={this.state.roomName}/>
+          <Header users={this.state.users} leaveRoom={this.leaveRoom} roomName={this.state.roomName}/>
           <SideBar users={this.state.users} name={this.state.name} roomName={this.state.roomName}/>
           <Footer sendGif={this.sendGif} search={this.search} gifs={this.state.gifs} name={this.state.name}/>
           <Chats sentGifs={this.state.sentGifs}/>

@@ -11,7 +11,15 @@ const Header = props => {
                         <span className="text-light">(refresh to leave the room)</span>
                         <p>or</p>
                         <button onClick={props.leaveRoom} className="btn btn-danger">Leave room</button>
-                        
+                        <br/>
+                        <div className="info-responsive">
+                            <strong>In room:</strong>
+                            {props.users.map(u => {
+                                if (u.room == props.roomName) {
+                                    return <div className="user">{u.name}</div>
+                                }
+                            })}
+                        </div>
                     </div>
                 </div>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">

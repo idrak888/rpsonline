@@ -69,6 +69,7 @@
     margin-top: -5px;
 }
 .Header .navbar {
+    color: white;
     border-bottom: 1px solid purple;
     filter: drop-shadow(0 0 0.3rem rgb(51, 51, 51));
 }
@@ -88,9 +89,9 @@
     text-align: center;
     left: 50%;
     margin-left: -37.5%;
-    height: 70vh;
+    height: 350px;
     z-index: 10;
-    margin-top: 100px;
+    margin-top: 20vh;
     background-color: white;
     border-radius: 4px;
 }
@@ -219,4 +220,44 @@
     z-index: 20;
     cursor: pointer;
     opacity: 0;
+}
+
+.Header .info-responsive {
+    margin-top: 20px;
+}
+.Header .info-responsive strong {
+    padding: 10px;
+    font-size: large;
+}
+.Header .info-responsive .user {
+    width: 100%;
+    padding: 10px;
+}
+
+@media only screen and (max-width: 600px) {
+    .SideBar {
+        display: none;
+    }
+    .Header .info-responsive {
+        display: block;
+    }
+    .Chats {
+        width: 100%;
+        margin: 0;
+    }
+    .Textbox, .TextboxMine {
+        width: 200px;
+    }
+    .Footer .info {
+        display: none;
+
+    }
+    .Footer .chat-bar {
+        width: 100%;
+    }
+}
+@media only screen and (max-width: 400px) {
+    .Textbox, .TextboxMine {
+        width: 50%;
+    }
 }
