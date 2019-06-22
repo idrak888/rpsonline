@@ -1,3 +1,6 @@
+html {
+    scroll-behavior: smooth;
+}
 .SideBar {
     background-color: rgb(99, 14, 99);
     position: fixed;
@@ -41,6 +44,8 @@
     border-bottom: 1px solid white;
     background: transparent;
     color: white;
+    -webkit-appearance: none;
+    border-radius: 0;
 }
 .Footer footer .btn {
     width: 180px;
@@ -175,6 +180,7 @@
     width: 100%;
     white-space: nowrap;
     overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
 }
 .gifs-holder div { 
     margin: 10px 12px;
@@ -260,4 +266,29 @@
     .Textbox, .TextboxMine {
         width: 50%;
     }
+}
+@media only screen and (max-width: 500px) {
+
+    .Join input, .Join button {
+        width: 70%;
+    }
+}
+.overlay-white {
+    position: fixed;
+    height:100%;
+    top:0; left:0;
+    background-image: url("bg1.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    z-index: 60;
+    width: 100%;
+    vertical-align: top;
+    animation: fadeAway 1s ease-out;
+    animation-delay: 2s;
+    animation-fill-mode: forwards;
+}
+@keyframes fadeAway {
+    from {opacity: 1;}
+    to {opacity: 0; z-index: -10;}
 }

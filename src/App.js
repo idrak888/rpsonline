@@ -98,9 +98,11 @@ class App extends Component {
   }
   search = e => {
     e.preventDefault();
-    this.setState({gifs:['https://www.voya.ie/Interface/Icons/LoadingBasketContents.gif']});
     const searchBox = document.querySelector('#search');
-    
+    searchBox.blur();
+
+    this.setState({gifs:['https://www.voya.ie/Interface/Icons/LoadingBasketContents.gif']});
+
     axios.get('https://api.giphy.com/v1/gifs/search?api_key=HGqbIYKPYqFQ8r4W24R88g7b91nfr8p0&q='+searchBox.value+'&limit=15&offset=0&rating=G&lang=en')
     .then(doc => {
         var gifs = [];
@@ -128,6 +130,7 @@ class App extends Component {
     return (
       <div className="App">
           <Msg msg={this.state.msg} />
+          <div className="overlay-white"></div>
           <div className="overlay"></div>
           <Join newUser={this.newUser} updateRoomInfo={this.updateRoomInfo} />
           <Header users={this.state.users} leaveRoom={this.leaveRoom} roomName={this.state.roomName}/>

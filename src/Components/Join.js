@@ -24,8 +24,8 @@ class Join extends Component {
                 <h2>Join a room</h2>
                 <br/>
                 <form>
-                    <input id="name" type="text" placeholder="Name"/>
-                    <input id="room" type="text" placeholder="Room name"/>
+                    <input autoComplete="off" id="name" type="text" placeholder="Name"/>
+                    <input autoComplete="off" id="room" type="text" placeholder="Room name"/>
                     <br/>
                     <button onClick={this.joinRoom} className="btn btn-primary">Join</button>
                     <p className="text-danger"></p>

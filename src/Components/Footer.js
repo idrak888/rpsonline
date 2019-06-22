@@ -23,7 +23,7 @@ const Footer = props => {
                                 <div class="bg-dark card card-body">
                                     <h2>Browse GIFS</h2>
                                     <form onSubmit={props.search}>
-                                        <input id="search" type="text" placeholder="Search"/>    
+                                        <input autoComplete="off" id="search" type="text" placeholder="Search"/>    
                                     </form>
                                     <div className="gifs-holder">
                                         {props.gifs.map((g, index) => {
