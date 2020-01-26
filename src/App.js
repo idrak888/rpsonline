@@ -17,6 +17,7 @@ class App extends Component {
     users: [],
     msg: 'message here...',
     dummyGifs: [
+      'https://media1.giphy.com/media/E5ZPIfEsmbNC0/giphy.gif?cid=f70d79fe54afe7c7ce7e7df41562089d0247f64d78165cc9&rid=giphy.gif',
       'https://media1.giphy.com/media/SiNGhMu9W4180gvZk5/giphy.gif',
       'https://media3.giphy.com/media/kEKcOWl8RMLde/giphy.gif',
       'https://media1.tenor.com/images/3407ac126f4a0dbc6d2c57a261eedf06/tenor.gif?itemid=11869791',
@@ -32,7 +33,7 @@ class App extends Component {
     ]
   }
   componentDidMount() {
-    this.socket = io('localhost:3100');
+    this.socket = io('/');
     this.socket.on('updateList', users => {
       this.setState({users});
     });
@@ -78,10 +79,11 @@ class App extends Component {
   updateRoomInfo = (name, room) => {
     axios.get('https://api.giphy.com/v1/gifs/trending?api_key=HGqbIYKPYqFQ8r4W24R88g7b91nfr8p0&limit=25&rating=G')
     .then(doc => {
+        var gifData = doc.data;
         var gifs = [];
 
         for (let i=0;i<25;i++) {
-          gifs.push("https://i.giphy.com/media/"+doc.data.data[i].id+"/giphy.webp");
+          gifs.push(gifData.data[i].images.original.url);
         }
 
         this.setState({gifs});
@@ -106,10 +108,11 @@ class App extends Component {
 
     axios.get('https://api.giphy.com/v1/gifs/search?api_key=HGqbIYKPYqFQ8r4W24R88g7b91nfr8p0&q='+searchBox.value+'&limit=15&offset=0&rating=G&lang=en')
     .then(doc => {
+        var gifData = doc.data;
         var gifs = [];
 
         for (let i=0;i<15;i++) {
-          gifs.push("https://i.giphy.com/media/"+doc.data.data[i].id+"/giphy.webp");
+          gifs.push(gifData.data[i].images.original.url);
         }
 
         this.setState({gifs});
@@ -136,7 +139,7 @@ class App extends Component {
           <Join newUser={this.newUser} updateRoomInfo={this.updateRoomInfo} />
           <Header users={this.state.users} leaveRoom={this.leaveRoom} roomName={this.state.roomName}/>
           <SideBar users={this.state.users} name={this.state.name} roomName={this.state.roomName}/>
-          <Footer sendGif={this.sendGif} search={this.search} gifs={this.state.dummyGifs} name={this.state.name}/>
+          <Footer sendGif={this.sendGif} search={this.search} gifs={this.state.gifs} name={this.state.name}/>
           <Chats sentGifs={this.state.sentGifs}/>
       </div>
     );
