@@ -30,6 +30,8 @@ const Footer = props => {
                                             return (
                                                 <div key={index}>
                                                     <img src={g} className="gifs"/>
+                                                    <div className="gif-overlay"></div>
+                                                    <a className="send" data-toggle="collapse" data-target="#multiCollapseExample2" aria-expanded="false" aria-controls="multiCollapseExample2" onClick={() => sendGifInit(index)}>send</a>
                                                 </div>
                                             )
                                         })}

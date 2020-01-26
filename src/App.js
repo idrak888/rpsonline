@@ -16,7 +16,7 @@ class App extends Component {
     name: '',
     users: [],
     msg: 'message here...',
-    gifs: [
+    dummyGifs: [
       'https://media1.giphy.com/media/SiNGhMu9W4180gvZk5/giphy.gif',
       'https://media3.giphy.com/media/kEKcOWl8RMLde/giphy.gif',
       'https://media1.tenor.com/images/3407ac126f4a0dbc6d2c57a261eedf06/tenor.gif?itemid=11869791',
@@ -25,13 +25,14 @@ class App extends Component {
       'http://firealpaca.com/images/douga/alpaca_gifanime.gif',
       'https://cdn-images-1.medium.com/max/1600/1*-e5Hl_0novHiOgPNVXzNLw.gif'
     ],
+    gifs: [],
     sentGifs:[
       {sender: 'Idrak', src: 'https://techcrunch.com/wp-content/uploads/2015/08/safe_image.gif?w=730&crop=1'},
       {sender: 'May', src: 'https://compote.slate.com/images/697b023b-64a5-49a0-8059-27b963453fb1.gif'}      
     ]
   }
   componentDidMount() {
-    this.socket = io('/');
+    this.socket = io('localhost:3100');
     this.socket.on('updateList', users => {
       this.setState({users});
     });
@@ -135,7 +136,7 @@ class App extends Component {
           <Join newUser={this.newUser} updateRoomInfo={this.updateRoomInfo} />
           <Header users={this.state.users} leaveRoom={this.leaveRoom} roomName={this.state.roomName}/>
           <SideBar users={this.state.users} name={this.state.name} roomName={this.state.roomName}/>
-          <Footer sendGif={this.sendGif} search={this.search} gifs={this.state.gifs} name={this.state.name}/>
+          <Footer sendGif={this.sendGif} search={this.search} gifs={this.state.dummyGifs} name={this.state.name}/>
           <Chats sentGifs={this.state.sentGifs}/>
       </div>
     );
