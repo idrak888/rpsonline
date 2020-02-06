@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import logo from '../gifrooms.png';
 
 class Join extends Component {
     joinRoom = e => {
@@ -22,6 +23,7 @@ class Join extends Component {
         return (
             <div className="Join">
                 <br/>
+                <img src={logo} width="50"/>
                 <h2>Join a room</h2>
                 <form>
                     <input autoComplete="off" id="name" type="text" placeholder="Name"/>
