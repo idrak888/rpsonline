@@ -16,7 +16,7 @@ io.sockets.on('connection', socket => {
     socket.on('newUser', data => {
         clients.push(socket);
         users.push({name: data.name, room: data.room});
-        console.log(users);
+        console.log(users); 
 
         socket.broadcast.emit('userJoined', {
             name: data.name,

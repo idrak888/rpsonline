@@ -6,7 +6,7 @@ const TextboxMine = props => {
             <div className="cont">
                 <span className="sender">{props.sender}</span>
                 <br/>
-                <img src={props.src} width="100%" className="gif"/>
+                <img alt="gif" src={props.src} width="100%" className="gif"/>
             </div>
         </div>
     );

@@ -6,7 +6,7 @@ class Join extends Component {
         const name = document.querySelector('#name').value;
         const room = document.querySelector('#room').value;
         
-        if (name == '' || room == '') {
+        if (name === '' || room === '') {
             document.querySelector('.text-danger').innerHTML = 'Please enter a name and a room name.';
         }else {
             
@@ -21,13 +21,12 @@ class Join extends Component {
     render () {
         return (
             <div className="Join">
-                <h2>Join a room</h2>
                 <br/>
+                <h2>Join a room</h2>
                 <form>
                     <input autoComplete="off" id="name" type="text" placeholder="Name"/>
                     <input autoComplete="off" id="room" type="text" placeholder="Room name"/>
-                    <br/>
-                    <button onClick={this.joinRoom} className="btn btn-primary">Join</button>
+                    <button onClick={this.joinRoom} className="btn btn-dark">Join</button>
                     <p className="text-danger"></p>
                 </form>
             </div>

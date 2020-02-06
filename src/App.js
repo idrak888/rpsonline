@@ -8,7 +8,6 @@ import Chats from './Components/Chats/Chats';
 import io from 'socket.io-client';
 import Msg from './Components/Msg';
 import axios from 'axios';
-import loading from './loading.png';
 
 class App extends Component {
   state = {
@@ -28,8 +27,7 @@ class App extends Component {
     ],
     gifs: [],
     sentGifs:[
-      {sender: 'Idrak', src: 'https://techcrunch.com/wp-content/uploads/2015/08/safe_image.gif?w=730&crop=1'},
-      {sender: 'May', src: 'https://compote.slate.com/images/697b023b-64a5-49a0-8059-27b963453fb1.gif'}      
+      {sender: 'GIFRooms', src: 'https://media.giphy.com/media/OkJat1YNdoD3W/giphy.gif'}
     ]
   }
   componentDidMount() {
@@ -38,7 +36,7 @@ class App extends Component {
       this.setState({users});
     });
     this.socket.on('userJoined', data => {
-      if (data.room == this.state.roomName) {
+      if (data.room === this.state.roomName) {
         this.setState({msg: data.name + ' joined the room!'});
         document.querySelector('.msg-box').style.display = 'block';
         setTimeout(() => {
@@ -47,7 +45,7 @@ class App extends Component {
       }
     });
     this.socket.on('userLeft', data => {
-      if (data.room == this.state.roomName) {
+      if (data.room === this.state.roomName) {
         this.setState({msg: data.name + ' left the room.'});
         document.querySelector('.msg-box').style.display = 'block';
         setTimeout(() => {
@@ -56,7 +54,7 @@ class App extends Component {
       }
     });
     this.socket.on('newSentGifs', data => {
-      if (data.roomName == this.state.roomName) {
+      if (data.roomName === this.state.roomName) {
         this.loadNewGif(data.newGif)
       }
     });
@@ -65,7 +63,7 @@ class App extends Component {
   loadNewGif = newGif => {
     var newMsg = newGif;
     
-    if (newMsg.sender == this.state.name) {
+    if (newMsg.sender === this.state.name) {
       newMsg.sender = 'Me';
     }
 
@@ -134,7 +132,6 @@ class App extends Component {
     return (
       <div className="App">
           <Msg msg={this.state.msg} />
-          <div className="overlay-white"></div>
           <div className="overlay"></div>
           <Join newUser={this.newUser} updateRoomInfo={this.updateRoomInfo} />
           <Header users={this.state.users} leaveRoom={this.leaveRoom} roomName={this.state.roomName}/>

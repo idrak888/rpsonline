@@ -1,26 +1,27 @@
 import React from 'react';
 import avatar from '../avatar.png';
-import caretup from '../caretup.png';
-import send from '../send.png';
 
 const Footer = props => {
-    const sendGifInit = index => {
+    const sendGifInit = (index, e) => {
+        e.preventDefault();
         props.sendGif(document.querySelectorAll('.gifs')[index].src);
     }
     return (
         <div className="Footer">
-            <footer className="navbar fixed-bottom bg-dark">
+            <footer className="navbar fixed-bottom">
                 <div className="info">
-                    {props.name} <img src={avatar} className="avatar"/>
+                    {props.name} <img alt="Avatar icon" src={avatar} className="avatar"/>
                 </div>
                 <div className="chat-bar">
                     <p>
-                        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#multiCollapseExample2" aria-expanded="false" aria-controls="multiCollapseExample2">GIFS</button>
-                    </p>
-                    <div class="row">
-                        <div class="col">
-                            <div class="collapse multi-collapse" id="multiCollapseExample2">
-                                <div class="bg-dark card card-body">
+                        <button className="btn btn-success" type="button" data-toggle="collapse" data-target="#multiCollapseExample2" aria-expanded="false" aria-controls="multiCollapseExample2">
+                            GIFS<img src="https://www.materialui.co/materialIcons/navigation/arrow_drop_down_white_192x192.png"/>
+                        </button>
+                    </p> 
+                    <div className="row">
+                        <div className="col">
+                            <div className="collapse multi-collapse" id="multiCollapseExample2">
+                                <div className="bg-dark card card-body">
                                     <h2>Browse GIFS</h2>
                                     <form onSubmit={props.search}>
                                         <input autoComplete="off" id="search" type="text" placeholder="Search"/>    
@@ -29,9 +30,9 @@ const Footer = props => {
                                         {props.gifs.map((g, index) => {
                                             return (
                                                 <div key={index}>
-                                                    <img src={g} className="gifs"/>
+                                                    <img alt="Gif" src={g} className="gifs"/>
                                                     <div className="gif-overlay"></div>
-                                                    <a className="send" data-toggle="collapse" data-target="#multiCollapseExample2" aria-expanded="false" aria-controls="multiCollapseExample2" onClick={() => sendGifInit(index)}>send</a>
+                                                    <a className="send" href="/" data-toggle="collapse" data-target="#multiCollapseExample2" aria-expanded="false" aria-controls="multiCollapseExample2" onClick={(e) => sendGifInit(index, e)}>send</a>
                                                 </div>
                                             )
                                         })}

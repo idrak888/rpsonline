@@ -2,7 +2,7 @@ html {
     scroll-behavior: smooth;
 }
 .SideBar {
-    background-color: rgb(99, 14, 99);
+    background-color: rgb(128, 12, 201);
     position: fixed;
     height: 100vh;
     z-index: 0;
@@ -12,10 +12,10 @@ html {
 .SideBar .room-info {
     height: 80%;
     margin-top: 80px;
+    color: white;
 }
 .SideBar .room-info strong {
     padding: 10px;
-    color: white;
     font-size: large;
 }
 .SideBar .room-info h5 {
@@ -27,12 +27,11 @@ html {
 }
 .SideBar .user:hover {
     cursor: pointer;
-    background-color: white;
-    color: purple;
+    background-color: rgb(155, 27, 235);
 }
-.Footer footer{
+.Footer footer {
     z-index: 1;
-    background-color: lightblue;
+    background-color: #202020;
     padding: 0px;
     padding-right: 20px;
 }
@@ -48,10 +47,17 @@ html {
     border-radius: 0;
 }
 .Footer footer .btn {
-    width: 180px;
+    width: 170px;
     border-radius: 0;
     margin-top: 10px;
     margin-left: 20px;
+    font-weight: bolder;
+}
+.Footer footer .btn img {
+    width: 30px;
+}
+.Footer footer .btn:focus {
+    outline: none;
 }
 .Footer .chat-bar {
     width: 75%;
@@ -60,7 +66,7 @@ html {
 .info {
     width: 20%;
     padding: 20px;
-    background-color: rgb(124, 10, 124);
+    background-color: rgb(110, 16, 168);
     color: white;
     font-weight: bold;
     font-size: larger;
@@ -74,9 +80,9 @@ html {
     margin-top: -5px;
 }
 .Header .navbar {
+    background-color: #202020;
     color: white;
-    border-bottom: 1px solid purple;
-    filter: drop-shadow(0 0 0.3rem rgb(51, 51, 51));
+    border-bottom: 1px solid #B236FD;
 }
 .overlay {
     position: fixed;
@@ -89,22 +95,28 @@ html {
     transition: 1s;
 }
 .Join {
-    width: 75%;
+    width: 50%;
     position: fixed;
     text-align: center;
     left: 50%;
-    margin-left: -37.5%;
+    margin-left: -25%;
     height: 350px;
     z-index: 10;
     margin-top: 20vh;
-    background-color: white;
-    border-radius: 4px;
+    background-color: #B236FD;
+    border-radius: 10px;
+}
+@media only screen and (max-width: 660px) {
+    .Join {
+        width: 75%;
+        margin-left: -37.5%;
+    }
 }
 .Join h2 {
     width: 100%;
     border-top-left-radius: 4px;
     border-top-right-radius: 4px;
-    background-color: purple;
+    background-color: #B236FD;
     color: white;
     margin-bottom: 20px;
     height: auto;
@@ -112,14 +124,18 @@ html {
 }
 .Join input, .Join button {
     display: block;
-    padding: 6px;
+    padding: 8px;
     width: 50%;
     margin: auto;
-    border: 1px solid rgb(167, 167, 167);
+    border: 0;
     border-radius: 3px;
     margin-top: 10px;
     -webkit-appearance: none;
     max-width: 300px;
+    filter: drop-shadow(0 0 0.2rem rgb(128, 128, 128));
+}
+.Join .text-danger {
+    color: white;
 }
 .SlideHide {
     animation: slideAway 0.5s ease-in-out;
@@ -272,23 +288,4 @@ html {
     .Join input, .Join button {
         width: 70%;
     }
-}
-.overlay-white {
-    position: fixed;
-    height:100%;
-    top:0; left:0;
-    background-image: url("bg1.jpg");
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    z-index: 60;
-    width: 100%;
-    vertical-align: top;
-    animation: fadeAway 1s ease-out;
-    animation-delay: 2s;
-    animation-fill-mode: forwards;
-}
-@keyframes fadeAway {
-    from {opacity: 1;}
-    to {opacity: 0; z-index: -10;}
 }

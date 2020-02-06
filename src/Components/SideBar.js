@@ -11,11 +11,7 @@ class SideBar extends Component {
                     <h5>{this.props.roomName}</h5>
                     <hr/>
                     <strong>In room:</strong>
-                    {this.props.users.map(u => {
-                        if (u.room == this.props.roomName) {
-                            return <div className="user">{u.name}</div>
-                        }
-                    })}
+                    {this.props.users.map((u, index) => u.room === this.props.roomName ? <div key={index} className="user">{u.name}</div> : <div key={index}></div>)}
                 </div>
             </div>
         );
