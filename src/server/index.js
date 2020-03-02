@@ -8,34 +8,63 @@ const io = socketIo(server);
 
 const port = process.env.PORT || 3100;
 
-var users = [];
+var searchingPlayers = [];
+var searchingSockets = [];
 var clients = [];
 
 app.use(express.static(__dirname + '/../../build'));
 io.sockets.on('connection', socket => {
-    socket.on('newUser', data => {
+    socket.on('newPlayer', data => {
         clients.push(socket);
-        users.push({name: data.name, room: data.room});
-        console.log(users); 
-
-        socket.broadcast.emit('userJoined', {
-            name: data.name,
-            room: data.room
-        });
-        io.emit('updateList', users);
+        io.emit('updatePlayerCount', clients.length);
     });
-    socket.on('sendNewGif', data => {
-        io.emit('newSentGifs', {
-            roomName: data.room,
-            newGif: data.newGif
+    socket.on('initSearch', data => {
+        searchingPlayers.push(data.username);
+        searchingSockets.push(socket);
+
+        if (searchingPlayers.length >= 2) {
+            var player1 = {username: searchingPlayers[0], socket: searchingSockets[0]};
+            var player2 = {username: searchingPlayers[1], socket: searchingSockets[1]};
+            var roomName = `${player1.username}vs${player2.username}`;
+
+            player1.socket.join(roomName);
+            player2.socket.join(roomName);
+            io.to(player1.socket.id).emit('matched', {
+                opponent: player2.username
+            });
+            io.to(player2.socket.id).emit('matched', {
+                opponent: player1.username
+            });
+            setTimeout(() => {
+                io.to(roomName).emit('startRound', roomName);
+            }, 4000);
+
+            searchingPlayers.splice(0, 2);
+            searchingSockets.splice(0, 2);
+        }   
+    });
+    socket.on('handleThrow', data => {
+        var roomName = data.roomName;
+        var username = data.username;
+        var move = data.move;
+        var img = data.img;
+
+        socket.to(roomName).emit('opponentMove', {
+            move,
+            img
         });
+    });
+    socket.on('cancelSearch', data => {
+        var i = searchingPlayers.indexOf(data.username);
+        searchingPlayers.splice(i, 1);
+        searchingSockets.splice(i, 1);
     });
     socket.on('disconnect', () => {
         var i = clients.indexOf(socket);
 
         clients.splice(i, 1);
-        users.splice(i, 1);
-        io.emit('updateList', users);
+        searchingPlayers.splice(i, 1);
+        io.emit('updatePlayerCount', clients.length);
     });
 });
 
