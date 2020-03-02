@@ -1,13 +1,13 @@
 {
   "name": "rpsonline",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "dependencies": {
     "express": "^4.17.1",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6",
+    "react": "^16.13.0",
+    "react-dom": "^16.13.0",
     "react-scripts": "3.0.1",
-    "socket.io": "^2.2.0",
-    "socket.io-client": "^2.2.0"
+    "socket.io": "^2.3.0",
+    "socket.io-client": "^2.3.0"
   },
   "scripts": {
     "start": "node src/server/index.js",
@@ -22,6 +22,6 @@
     "extends": "react-app"
   },
   "devDependencies": {
-    "concurrently": "^4.1.0"
+    "concurrently": "^4.1.2"
   }
 }
