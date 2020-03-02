@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import io from 'socket.io-client';
 
-import Header from './components/Header';
+import Header from './Components/Header';
 import Main from './containers/Main';
 import GameRoom from './containers/GameRoom';
 
