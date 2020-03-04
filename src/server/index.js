@@ -1,4 +1,3 @@
-const path = require('path');
 const express = require('express');
 const http = require('http');
 const socketIo = require('socket.io');
@@ -11,6 +10,7 @@ const port = process.env.PORT || 3100;
 var searchingPlayers = [];
 var searchingSockets = [];
 var clients = [];
+var roomName = '';
 
 app.use(express.static(__dirname + '/../../build'));
 io.sockets.on('connection', socket => {
@@ -25,7 +25,7 @@ io.sockets.on('connection', socket => {
         if (searchingPlayers.length >= 2) {
             var player1 = {username: searchingPlayers[0], socket: searchingSockets[0]};
             var player2 = {username: searchingPlayers[1], socket: searchingSockets[1]};
-            var roomName = `${player1.username}vs${player2.username}`;
+            roomName = `${player1.username}vs${player2.username}`;
 
             player1.socket.join(roomName);
             player2.socket.join(roomName);
@@ -61,6 +61,9 @@ io.sockets.on('connection', socket => {
     });
     socket.on('disconnect', () => {
         var i = clients.indexOf(socket);
+
+        socket.leave(roomName);
+        socket.to(roomName).emit('opponentLeft');
 
         clients.splice(i, 1);
         searchingPlayers.splice(i, 1);

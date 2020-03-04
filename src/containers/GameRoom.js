@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Slide from 'react-reveal/Slide';
-import Flash from 'react-reveal/Flash';
+import Zoom from 'react-reveal/Zoom';
 
 class GameRoom extends Component {
     componentDidMount() {
@@ -45,9 +45,17 @@ class GameRoom extends Component {
                     </div>
                     <br/>
                     <div className="playground">
-                        {this.props.myMoveImg !== '' ? <img className="opponentMove" src={this.props.opponentMoveImg}/> : ''}
+                        {this.props.myMoveImg !== '' ? 
+                            <Zoom down>
+                                <img className="opponentMove" src={this.props.opponentMoveImg}/> 
+                            </Zoom>
+                        :''}
                         <h1>{this.props.countDown}</h1>
-                        <img src={this.props.myMoveImg}/>
+                        {this.props.myMoveImg !== '' ? 
+                            <Zoom up>
+                                <img src={this.props.myMoveImg}/>
+                            </Zoom>
+                        :''}
                     </div>
                     <br/>
                     <div className="my-score">

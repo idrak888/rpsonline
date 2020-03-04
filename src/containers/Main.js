@@ -1,73 +1,192 @@
 import React, { Component } from 'react';
-import Zoom from 'react-reveal/Zoom';
-import Jump from 'react-reveal/Jump';
+import io from 'socket.io-client';
 
-class MainMenu extends Component {
+import Header from '../Components/Header';
+import MainMenu from './MainMenu';
+import GameRoom from './GameRoom';
+
+class Main extends Component {
     state = {
-        username: ''
+        playerCount: 0,
+        round: 0,
+        username: '',
+        opponent: '',
+        roomName: '',
+        countDown: '',
+        throwReady: false,
+        myMove: '',
+        opponentMove: '',
+        myMoveImg: '',
+        opponentMoveImg: '',
+        myScore: 0,
+        opponentScore: 0
     }
-    updateUsername = e => {
-        this.setState({username: e.target.value});
+    componentDidMount() {
+        this.setState({opponent: ''});
+        
+        this.socket = io('localhost:3100');
+        this.socket.emit('newPlayer');
+        this.socket.on('updatePlayerCount', playerCount => {
+            this.setState({playerCount});
+        });
+        this.socket.on('matched', data => {
+            this.setState({opponent: data.opponent});
+        });
+        this.socket.on('startRound', roomName => {
+            this.setState({roomName});
+            this.startRound();
+        });
+        this.socket.on('opponentMove', data => {
+            this.setState({opponentMove: data.move, opponentMoveImg: data.img});
+
+            if (this.state.myMove !== '') {
+                this.evaluateScore(this.state.myMove);
+            } 
+        });
+        this.socket.on('opponentLeft', () => {
+            alert('Opponent disconnected');
+            window.location = '/';
+        });
     }
-    search = () => {
-        const form = document.querySelector('.form');
-        const searching = document.querySelector('.searching');
-
-        if (this.state.username.trim() !== '') {
-            form.style.display = 'none';
-            searching.style.display = 'block';
-
-            this.props.search(this.state.username);
+    search = username => {
+        this.setState({username});
+        this.socket.emit('initSearch', {
+            username
+        });
+    }
+    cancelSearch = username => {
+        this.setState({username: ''});
+        this.socket.emit('cancelSearch', {
+            username
+        });
+    }
+    startRound = () => {
+        if (this.state.round < 10) {
+            this.setState({round: this.state.round+1, countDown: 3});
+            setTimeout(() => {
+                this.countDown();
+            }, 600);
+        } else {
+            if (this.state.myScore > this.state.opponentScore) {
+                alert('You win!');
+            } else if (this.state.myScore < this.state.opponentScore) {
+                alert('You lose!');
+            } else {
+                alert('draw');
+            }
+            window.location = '/';
         }
     }
-    cancelSearch = () => {
-        const form = document.querySelector('.form');
-        const searching = document.querySelector('.searching');
-
-        if (this.state.username.trim() !== '') {
-            form.style.display = 'block';
-            searching.style.display = 'none';
-
-            this.props.cancelSearch(this.state.username);
+    countDown = () => {
+        var currentCount = this.state.countDown;
+        if (currentCount > 1) {
+            this.setState({countDown: currentCount - 1});
+            setTimeout(() => {
+                this.countDown();
+            }, 600);
+        } else {
+            this.setState({countDown: 'Throw!'});
+            setTimeout(() => {
+                this.setState({countDown: '', throwReady: true});
+            }, 500);
         }
     }
-    render() {
+    handleThrow = (move, img) => {
+        if (this.state.throwReady) {
+            this.socket.emit('handleThrow', {
+                roomName: this.state.roomName,
+                username: this.state.username,
+                move,
+                img
+            });
+
+            this.setState({myMove: move, myMoveImg: img, throwReady: false});
+
+            if (this.state.opponentMove !== '') {
+                this.evaluateScore(move);
+            } 
+        }
+    }
+    evaluateScore = myMove => {
+        var opponentMove = this.state.opponentMove;   
+        var winner = '';
+        var myScore = this.state.myScore;
+        var opponentScore = this.state.opponentScore;
+
+        switch(myMove) {
+            case 'rock':
+                if (opponentMove == 'rock') {
+                    winner = 'draw';
+                } else if (opponentMove == 'paper') {
+                    winner = this.state.opponent;
+                } else if (opponentMove == 'scissors') {
+                    winner = this.state.username;
+                }
+                break;
+            case 'paper':
+                if (opponentMove == 'paper') {
+                    winner = 'draw';
+                } else if (opponentMove == 'rock') {
+                    winner = this.state.username;
+                } else if (opponentMove == 'scissors') {
+                    winner = this.state.opponent;
+                }
+                break;
+            case 'scissors':
+                if (opponentMove == 'scissors') {
+                    winner = 'draw';
+                } else if (opponentMove == 'paper') {
+                    winner = this.state.username;
+                } else if (opponentMove == 'rock') {
+                    winner = this.state.opponent;
+                }
+                break;
+            default: console.log('Invalid move');
+        }
+
+        if (winner == this.state.username) {
+            this.setState({myScore: myScore+1});
+        } else if (winner == this.state.opponent) {
+            this.setState({opponentScore: opponentScore+1});
+        } else {
+            this.setState({opponentScore: opponentScore+1, myScore: myScore+1});
+        }
+        setTimeout(() => {
+            this.setState({
+                myMove: '', 
+                opponentMove: '',
+                myMoveImg: '',
+                opponentMoveImg: ''
+            });
+            this.startRound();
+        }, 2000);
+    }
+    render () {
         return (
             <div className="Main">
-                <Zoom bottom>
-                    <img src="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/144/apple/237/victory-hand_270c.png"/>
-                </Zoom>
-                <Zoom bottom>
-                    <img src="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/144/apple/237/raised-fist_270a.png"/>
-                </Zoom>
-                <Zoom bottom>
-                    <img src="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/144/apple/237/raised-hand-with-fingers-splayed_1f590.png"/>
-                </Zoom>
-                <br/>
-                <br/>
-                <div className="form">
-                    <Jump>
-                        <input onChange={this.updateUsername} value={this.state.username} type="text" placeholder="Username"/>
-                    </Jump>
-                    <br/>
-                    <Jump>
-                        <button onClick={this.search} className="btn">Play</button>
-                        <p className="player-count">{`${this.props.playerCount} player(s) online`}</p>
-                    </Jump>
-                </div>
-                <div className="searching">
-                    <h2>Searching...</h2>
-                    <button onClick={this.cancelSearch} className="btn">Cancel</button>
-                </div>
-                <br/>
-                <div className="rules">
-                    <h3>Rules</h3>
-                    <p><strong>Rock</strong> beats <strong>scissors</strong>, <strong>scissors</strong> beats <strong>paper</strong>, <strong>paper</strong> beats <strong>rock</strong>.</p>
-                    <p>You get a total of 10 quick rounds against another player. Player with the higher score wins!</p>
-                </div>
+                <Header/>
+                {
+                    this.state.opponent === '' ?
+                    <MainMenu 
+                        cancelSearch={this.cancelSearch} 
+                        search={this.search} 
+                        playerCount={this.state.playerCount}
+                    />
+                    :
+                    <GameRoom
+                        handleThrow={this.handleThrow} 
+                        countDown={this.state.countDown} 
+                        username={this.state.username} 
+                        opponent={this.state.opponent}
+                        myMoveImg={this.state.myMoveImg}
+                        opponentMoveImg={this.state.opponentMoveImg}
+                        myScore={this.state.myScore}
+                        opponentScore={this.state.opponentScore}
+                    />
+                }
             </div>
         );
     }
 }
 
-export default MainMenu;
+export default Main;

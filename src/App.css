@@ -9,7 +9,7 @@ body {
     color: white;
     border-bottom: 1px solid #F44B19;
 }
-.Main {
+.MainMenu {
     display: block;
     margin: auto;
     text-align: center;
@@ -19,16 +19,16 @@ body {
     padding: 20px;
     color: white;
 }
-.Main img {
+.MainMenu img {
     width: 80px;
 }
-.Main .searching {
+.MainMenu .searching {
     display: none;
 }
-.Main .form {
+.MainMenu .form {
     display: block;
 }
-.Main input, .Main .btn {
+.MainMenu input, .MainMenu .btn {
     padding: 10px;
     width: 100%;
     font-size: large;
@@ -37,15 +37,15 @@ body {
     border-radius: 4px;
     border: 0;
 }
-.Main .rules {
+.MainMenu .rules {
     text-align: left;
     margin-top: 50px;
     font-size: large;
 }
-.Main .rules strong {
+.MainMenu .rules strong {
     color: rgb(177, 57, 20);
 }
-.Main .player-count {
+.MainMenu .player-count {
     text-align: left;
 }
 .btn {
