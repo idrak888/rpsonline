@@ -24,7 +24,7 @@ class Main extends Component {
     componentDidMount() {
         this.setState({opponent: ''});
         
-        this.socket = io('localhost:3100');
+        this.socket = io('/');
         this.socket.emit('newPlayer');
         this.socket.on('updatePlayerCount', playerCount => {
             this.setState({playerCount});
