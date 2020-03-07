@@ -29,7 +29,7 @@ class GameRoom extends Component {
                     </Slide>
                 </div>
                 <div className="gameScreen">
-                    <div className="opponent-score">
+                    <div className={this.props.roundWinner == 'opponent' || this.props.roundWinner == 'draw' ? "opponent-score winner-box" : "opponent-score"}>
                         <h3>{this.props.opponent}: {this.props.opponentScore}</h3>
                         <div className="row">
                             <div className="col-xs">
@@ -58,7 +58,7 @@ class GameRoom extends Component {
                         :''}
                     </div>
                     <br/>
-                    <div className="my-score">
+                    <div className={this.props.roundWinner == 'me' || this.props.roundWinner == 'draw' ? "my-score winner-box" : "my-score"}>
                         <div className="row">
                             <div onClick={() => this.props.handleThrow('scissors', 'https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/144/apple/237/victory-hand_270c.png')} className="col-xs">
                                 <img src="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/144/apple/237/victory-hand_270c.png"/>

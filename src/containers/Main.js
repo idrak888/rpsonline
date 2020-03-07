@@ -19,7 +19,8 @@ class Main extends Component {
         myMoveImg: '',
         opponentMoveImg: '',
         myScore: 0,
-        opponentScore: 0
+        opponentScore: 0,
+        roundWinner: ''
     }
     componentDidMount() {
         this.setState({opponent: ''});
@@ -145,18 +146,19 @@ class Main extends Component {
         }
 
         if (winner == this.state.username) {
-            this.setState({myScore: myScore+1});
+            this.setState({myScore: myScore+1, roundWinner: 'me'});
         } else if (winner == this.state.opponent) {
-            this.setState({opponentScore: opponentScore+1});
+            this.setState({opponentScore: opponentScore+1, roundWinner: 'opponent'});
         } else {
-            this.setState({opponentScore: opponentScore+1, myScore: myScore+1});
+            this.setState({opponentScore: opponentScore+1, myScore: myScore+1, roundWinner: 'draw'});
         }
         setTimeout(() => {
             this.setState({
                 myMove: '', 
                 opponentMove: '',
                 myMoveImg: '',
-                opponentMoveImg: ''
+                opponentMoveImg: '',
+                roundWinner: ''
             });
             this.startRound();
         }, 2000);
@@ -182,6 +184,7 @@ class Main extends Component {
                         opponentMoveImg={this.state.opponentMoveImg}
                         myScore={this.state.myScore}
                         opponentScore={this.state.opponentScore}
+                        roundWinner={this.state.roundWinner}
                     />
                 }
             </div>
