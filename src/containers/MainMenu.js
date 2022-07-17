@@ -63,7 +63,7 @@ class MainMenu extends Component {
                 <div className="rules">
                     <h3>Rules</h3>
                     <p><strong>Rock</strong> beats <strong>scissors</strong>, <strong>scissors</strong> beats <strong>paper</strong>, <strong>paper</strong> beats <strong>rock</strong>.</p>
-                    <p>You get a total of 10 quick rounds against another player. Player with the higher score wins!</p>
+                    <p>You get a total of 5 quick rounds against another player. Player with the higher score wins!</p>
                 </div>
             </div>
         );
