@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import io from 'socket.io-client';
 
-import Header from '../components/Header';
+import Header from '../Components/Header';
 import MainMenu from './MainMenu';
 import GameRoom from './GameRoom';
 
@@ -25,7 +25,7 @@ class Main extends Component {
     componentDidMount() {
         this.setState({opponent: ''});
         
-        this.socket = io('http://localhost:3100');
+        this.socket = io('/');
         this.socket.emit('newPlayer');
         this.socket.on('updatePlayerCount', playerCount => {
             this.setState({playerCount});
