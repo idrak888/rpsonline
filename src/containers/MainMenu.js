@@ -2,6 +2,10 @@ import React, { Component } from 'react';
 import Zoom from 'react-reveal/Zoom';
 import Jump from 'react-reveal/Jump';
 
+import Rock from '../assets/rock.png';
+import Paper from '../assets/paper.png';
+import Scissors from '../assets/scissors.png';
+
 class MainMenu extends Component {
     state = {
         username: ''
@@ -35,13 +39,13 @@ class MainMenu extends Component {
         return (
             <div className="MainMenu">
                 <Zoom bottom>
-                    <img src="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/144/apple/237/victory-hand_270c.png"/>
+                    <img width="50" src={Scissors}/>
                 </Zoom>
                 <Zoom bottom>
-                    <img src="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/144/apple/237/raised-fist_270a.png"/>
+                    <img width="60" src={Rock}/>
                 </Zoom>
                 <Zoom bottom>
-                    <img src="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/144/apple/237/raised-hand-with-fingers-splayed_1f590.png"/>
+                    <img width="70" src={Paper}/>
                 </Zoom>
                 <br/>
                 <br/>
