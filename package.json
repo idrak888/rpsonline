@@ -12,7 +12,7 @@
   },
   "engines": {
     "node": "16.x"
-  }
+  },
   "scripts": {
     "start": "node src/server/index.js",
     "start": "react-scripts --openssl-legacy-provider start",
